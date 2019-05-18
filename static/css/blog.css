@@ -1,0 +1,19 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.copyright {
+    background: #111111;
+    font-size: 14px;
+    text-align: center;
+    color: #555555;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
