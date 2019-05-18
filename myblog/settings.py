@@ -118,3 +118,6 @@ STATICFILES_DIRS = [
 # media路径配置
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# django项目用UserInfo表做认证
+AUTH_USER_MODEL = 'blog.UserInfo'
