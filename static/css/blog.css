@@ -1,12 +1,11 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     padding-top: 50px;
     padding-bottom: 50px;
-}
-
-footer {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
 }
 
 .copyright {
@@ -16,4 +15,20 @@ footer {
     color: #555555;
     padding-top: 14px;
     padding-bottom: 14px;
+}
+
+.title {
+    position: relative;
+    margin: 10px;
+    line-height: 20px;
+    padding: 1px 10px;
+    font-size: 14px;
+    background-color: #F7F7F7;
+    height: 20px;
+    border-bottom: 1px solid #eaeaea;
+    font-weight: normal;
+}
+
+.panel-heading > h5 {
+    font-size: 15px;
 }
