@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # 首页
     url(r'^index/$', views.index),
+    url(r'^reg/$', views.register),
 ]

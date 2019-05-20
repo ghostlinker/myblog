@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎注册</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/fontawesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/blog.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="/reg/" method="post" class="form-horizontal">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ reg_obj.username.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.username.label }}</label>
+                    <div class="col-sm-9">
+                        {{ reg_obj.username }}
+                        <span class="help-block">{{ reg_obj.username.errors.0 }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ reg_obj.pwd.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.pwd.label }}</label>
+                    <div class="col-sm-9">
+                        {{ reg_obj.pwd }}
+                        <span class="help-block">{{ reg_obj.pwd.errors.0 }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ reg_obj.re_pwd.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.re_pwd.label }}</label>
+                    <div class="col-sm-9">
+                        {{ reg_obj.re_pwd }}
+                        <span class="help-block">{{ reg_obj.re_pwd.errors.0 }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ reg_obj.email.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.email.label }}</label>
+                    <div class="col-sm-9">
+                        {{ reg_obj.email }}
+                        <span class="help-block">{{ reg_obj.email.errors.0 }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ reg_obj.phone_num.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.phone_num.label }}</label>
+                    <div class="col-sm-9">
+                        {{ reg_obj.phone_num }}
+                        <span class="help-block">{{ reg_obj.phone_num.errors.0 }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-success" id="reg_submit">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static '/js/jquery-3.3.1.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/js/blog.js' %}"></script>
+</body>
+</html>
