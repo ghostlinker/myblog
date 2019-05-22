@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>欢迎注册</title>
@@ -12,38 +12,41 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form action="/reg/" method="post" class="form-horizontal">
+            <h4 class="text-center">欢迎注册</h4>
+        </div>
+        <div class="col-md-6 col-md-offset-3">
+            <form autocomplete="off" class="form-horizontal">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="{{ reg_obj.username.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.username.label }}</label>
+                    <label for="{{ reg_obj.username.id_for_label }}" class="col-sm-3 control-label">{{ reg_obj.username.label }}</label>
                     <div class="col-sm-9">
                         {{ reg_obj.username }}
                         <span class="help-block">{{ reg_obj.username.errors.0 }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="{{ reg_obj.pwd.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.pwd.label }}</label>
+                    <label for="{{ reg_obj.password.id_for_label }}" class="col-sm-3 control-label">{{ reg_obj.password.label }}</label>
                     <div class="col-sm-9">
-                        {{ reg_obj.pwd }}
-                        <span class="help-block">{{ reg_obj.pwd.errors.0 }}</span>
+                        {{ reg_obj.password }}
+                        <span class="help-block">{{ reg_obj.password.errors.0 }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="{{ reg_obj.re_pwd.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.re_pwd.label }}</label>
+                    <label for="{{ reg_obj.re_pwd.id_for_label }}" class="col-sm-3 control-label">{{ reg_obj.re_pwd.label }}</label>
                     <div class="col-sm-9">
                         {{ reg_obj.re_pwd }}
                         <span class="help-block">{{ reg_obj.re_pwd.errors.0 }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="{{ reg_obj.email.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.email.label }}</label>
+                    <label for="{{ reg_obj.email.id_for_label }}" class="col-sm-3 control-label">{{ reg_obj.email.label }}</label>
                     <div class="col-sm-9">
                         {{ reg_obj.email }}
                         <span class="help-block">{{ reg_obj.email.errors.0 }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="{{ reg_obj.phone_num.id_for_label }}" class="col-sm-2 control-label">{{ reg_obj.phone_num.label }}</label>
+                    <label for="{{ reg_obj.phone_num.id_for_label }}" class="col-sm-3 control-label">{{ reg_obj.phone_num.label }}</label>
                     <div class="col-sm-9">
                         {{ reg_obj.phone_num }}
                         <span class="help-block">{{ reg_obj.phone_num.errors.0 }}</span>
