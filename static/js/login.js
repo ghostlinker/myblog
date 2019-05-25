@@ -17,7 +17,7 @@ $("#reg_submit").click(function () {
 
     $.ajax({
         url: "/reg/",
-        type: "POST",
+        type: "post",
         processData: false,  // 告诉jQuery不要处理我的数据
         contentType: false,  // 告诉jQuery不要设置content类型
         data: formData,
@@ -34,6 +34,7 @@ $("#reg_submit").click(function () {
 
             }else {
                 //没有错误就跳转到指定页面
+                alert("注册成功")
                 location.href = data.msg;
             }
         }
@@ -44,3 +45,49 @@ $("#reg_submit").click(function () {
 $("form input").focus(function () {
     $(this).next().text("").parent().parent().removeClass("has-error")
 })
+
+//用户名注册提示
+$("#id_username").on("input", function () {
+    //获取用户填写的用户名
+    var username = $(this).val();
+    $.ajax({
+        url: "/api/check_user/",
+        type: "get",
+        data: {"username": username},
+        success: function (data) {
+            if(data.status){
+                //用户名已被注册，给出提示信息
+                $("#id_username").next().text(data.msg).parent().parent().addClass("has-error");
+            }
+        }
+    })
+});
+
+//登录请求
+$("#login-button").click(function () {
+    var username = $("#username").val();
+    var password = $("#password").val();
+    $.ajax({
+        url: "/login/",
+        type: "post",
+        data:{
+            "username": username,
+            "password": password,
+            "csrfmiddlewaretoken":  $("[name='csrfmiddlewaretoken']").val()
+        },
+        success: function (data) {
+            if (data.status){
+                //页面上显示报错信息
+                $(".login-error").text(data.msg);
+            }else {
+                location.href = data.msg;
+            }
+        }
+    })
+})
+
+//重新获取焦点时清空之前的错误信息
+$("#username, #password").focus(function () {
+    $(".login-error").text("");
+});
+

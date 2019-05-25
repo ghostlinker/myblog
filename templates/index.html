@@ -79,8 +79,22 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/reg/">注册</a></li>
-                <li><a href="#">登录</a></li>
+                {% if request.user.username %}
+                    <li><a href="#">{{ request.user.username }}</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">个人中心</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout/">注销</a></li>
+                        </ul>
+                        {% else %}
+                    <li><a href="/reg/">注册</a></li>
+                    <li><a href="/login/">登录</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -105,14 +119,48 @@
                         <span><a href="#">{{ article.user.username }}&nbsp;</a></span>发布于
                         <span>{{ article.create_time|date:'Y-m-d H:i:s' }}&nbsp;</span>
                         <span><i class="fa fa-share fa-fw" aria-hidden="true"></i>点击:{{ article.hit_count }}</span>
-                        <span><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>评论:{{ article.comment_count }}</span>
+                        <span><i class="fa fa-comment-o fa-fw"
+                                 aria-hidden="true"></i>评论:{{ article.comment_count }}</span>
                         <span><i class="fa fa-thumbs-o-up fa-fw" aria-hidden="true"></i>点赞:{{ article.up_count }}</span>
                     </div>
                 </div>
             {% endfor %}
         </div>
+        <div class="col-md-3 column" style="margin-top: 10px">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章分类</h3>
+                </div>
+                <div class="panel-body">
+                    {% for category in category_list %}
+                        <a href="#"><p>{{ category.title }}({{ category.c }})</p></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         <div class="col-md-3 column">
-            侧边内容
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章标签</h3>
+                </div>
+                <div class="panel-body">
+                    {% for tag in tag_list %}
+                        <a href="#"><p>{{ tag.title }}({{ tag.c }})</p></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章归档</h3>
+                </div>
+                <div class="panel-body">
+                    {% for date in archive_list %}
+                        <a href="#"><p>{{ date.archive_ym }}({{ date.c }})</p></a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -125,6 +173,6 @@
 </footer>
 <script src="{% static '/js/jquery-3.3.1.js' %}"></script>
 <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="{% static '/js/blog.js' %}"></script>
+<script src="{% static '/js/login.js' %}"></script>
 </body>
 </html>
