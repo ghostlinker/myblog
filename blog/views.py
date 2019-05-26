@@ -20,10 +20,6 @@ def index(request):
 
 
 def register(request):
-    # if request.session.get('is_login', None):
-    #     # 登录状态不允许注册
-    #     return redirect("/index/")
-    #
     if request.method == "POST":
         ret = {"status": 0, "msg": ""}
         register_form = reg_form.RegForm(request.POST)
