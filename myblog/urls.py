@@ -13,5 +13,5 @@ urlpatterns = [
     # 所有的api
     url(r'^api/check_user/$', views.check_user),
     # blog下的url给blog下的url.py处理
-    url(r'^blog', include(urls)),
+    url(r'^blog/', include(urls)),
 ]

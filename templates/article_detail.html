@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>博客首页</title>
+    <title>文章详情</title>
     {% load static %}
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/fontawesome/css/font-awesome.min.css' %}">
@@ -25,7 +25,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">首页</a></li>
+                <li><a href="/index/">首页</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">学习目录</a>
@@ -101,42 +101,32 @@
 </nav>
 
 <!-- 页面主体内容 -->
-<div class="container-fluid">
-    <div class="row clearfix">
+<div class="container">
+    <div class="row">
         <div class="col-md-9 column">
             <div class="panel panel-default" style="margin-top: 10px">
-                <div class="panel-heading">最新发布</div>
+                <div class="panel-heading">文章内容</div>
             </div>
-            {% for article in article_list %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5><a href="/blog/{{ article.user.username }}/article/{{ article.pk }}/">{{ article.title }}</a></h5>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{ article.desc }}</p>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a href="#">{{ article.user.username }}&nbsp;</a></span>发布于
-                        <span>{{ article.create_time|date:'Y-m-d H:i:s' }}&nbsp;</span>
-                        <span><i class="fa fa-share fa-fw" aria-hidden="true"></i>点击:{{ article.hit_count }}</span>
-                        <span><i class="fa fa-comment-o fa-fw"
-                                 aria-hidden="true"></i>评论:{{ article.comment_count }}</span>
-                        <span><i class="fa fa-thumbs-o-up fa-fw" aria-hidden="true"></i>点赞:{{ article.up_count }}</span>
-                    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">{{ article.title }}</h1>
                 </div>
-            {% endfor %}
+                <div class="panel-body">
+                    {{ article.articledetail.content|safe }}
+                </div>
+            </div>
         </div>
         <div class="col-md-3 column" style="margin-top: 10px">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">文章分类</h3>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">文章分类</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% for category in category_list %}
+                            <a href="#"><p>{{ category.title }}({{ category.c }})</p></a>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="panel-body">
-                    {% for category in category_list %}
-                        <a href="#"><p>{{ category.title }}({{ category.c }})</p></a>
-                    {% endfor %}
-                </div>
-            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">文章标签</h3>
