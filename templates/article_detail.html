@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>文章详情</title>
+    <title>{{ article.title }}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/fontawesome/css/font-awesome.min.css' %}">
@@ -101,8 +101,9 @@
 </nav>
 
 <!-- 页面主体内容 -->
-<div class="container">
+<div class="container-fluid">
     <div class="row">
+    <div class="info" style="display: none" article_id="{{ article.pk }}" username="{{ request.user.username }}"></div>
         <div class="col-md-9 column">
             <div class="panel panel-default" style="margin-top: 10px">
                 <div class="panel-heading">文章内容</div>
@@ -115,18 +116,68 @@
                     {{ article.articledetail.content|safe }}
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">评论列表</h1>
+                </div>
+                <div class="panel-body">
+                    <ul class="comment_list">
+                        {% for comment in comment_list %}
+                            <li class="list-group-item">
+                                <div>
+                                    <span style="color: gray">第{{ forloop.counter }}楼</span> &nbsp;
+                                    <span style="color: gray">{{ comment.create_time|date:"Y-m-d h:i" }}</span> &nbsp;
+                                    <a href="#"><span>{{ comment.user.username }}</span></a>
+                                    <a class="pull-right reply_btn" username="{{ comment.user.username }}" comment_pk="{{ comment.pk }}">
+                                        <span>回复</span>
+                                    </a>
+                                </div>
+                                {% if comment.parent_comment_id %}
+                                    <div class="pid_info well">
+                                        <p>{{ comment.parent_comment.user.username }} &nbsp;{{ comment.parent_comment.content }} &nbsp;</p>
+                                    </div>
+                                {% endif %}
+                            <div class="con">
+                                <p>{{ comment.content }}</p>
+                            </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% csrf_token %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">评论区域</h1>
+                </div>
+                <div class="panel-body">
+                    {% if request.user.username %}
+                        <div class="div_comment">
+                            <p>昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled"
+                                         size="50" value="{{ request.user.username }}"></p>
+                            <p>评论内容</p>
+                            <textarea name="com_content" id="comment_content" cols="80" rows="10"></textarea>
+                            <p>
+                                <button id="comment_btn">提交评论</button>
+                            </p>
+                        </div>
+                    {% else %}
+                        <a href="/login/">登录</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
         <div class="col-md-3 column" style="margin-top: 10px">
             <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">文章分类</h3>
-                    </div>
-                    <div class="panel-body">
-                        {% for category in category_list %}
-                            <a href="#"><p>{{ category.title }}({{ category.c }})</p></a>
-                        {% endfor %}
-                    </div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章分类</h3>
                 </div>
+                <div class="panel-body">
+                    {% for category in category_list %}
+                        <a href="#"><p>{{ category.title }}({{ category.c }})</p></a>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">文章标签</h3>
@@ -160,5 +211,6 @@
 <script src="{% static '/js/jquery-3.3.1.js' %}"></script>
 <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static '/js/login.js' %}"></script>
+<script src="{% static '/js/comment.js' %}"></script>
 </body>
 </html>

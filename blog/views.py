@@ -111,3 +111,23 @@ def article_detail(request, username, pk):
         "tag_list": tag_list,
         "archive_list": archive_list,
     })
+
+
+def comment(request):
+    article_id = request.POST.get("article_id")
+    content = request.POST.get("content")
+    user_pk = request.user.pk
+    pid = request.POST.get("pid")
+    response = {}
+    if not pid:
+        # 没有pid，该评论为根评论，处理根评论
+        comment_obj = models.Comment.objects.create(article_id=article_id, user_id=user_pk, content=content)
+    else:
+        # 有pid，该评论为子评论，处理子评论
+        comment_obj = models.Comment.objects.create(article_id=article_id, user_id=user_pk, content=content,
+                                                    parent_comment_id=pid)
+    # 该文章的评论数量+1，这个逻辑后面补一下
+    response["create_time"] = comment_obj.create_time.strftime("%Y-%m-%d %H:%M")
+    response["content"] = comment_obj.content
+    response["username"] = comment_obj.user.username
+    return JsonResponse(response)
