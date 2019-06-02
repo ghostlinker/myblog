@@ -52,16 +52,8 @@ $("#div_digg .action").click(function () {
             },
             success: function (data) {
                 if (data.status) {
-                    //赞或者灭成功
-                    if (is_up){
-                        var val = $("#digg_count").text();
-                        val = parseInt(val) + 1;
-                        $("#digg_count").text(val);
-                    } else {
-                        var val = $("#bury_count").text();
-                        val = parseInt(val) + 1;
-                        $("#bury_count").text(val);
-                    }
+                    //赞或者灭成功后重新加载页面刷新出结果
+                    window.location.reload();
                 } else {
                     //重复提交
                     if (data.first_action) {
@@ -76,7 +68,7 @@ $("#div_digg .action").click(function () {
             }
         })
     } else {
-        alert("请登录后再点赞")
-        location.href = "/login/"
+        alert("请登录后再点赞");
+        location.href = "/login/";
     }
 });

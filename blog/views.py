@@ -127,7 +127,7 @@ def comment(request):
         # 有pid，该评论为子评论，处理子评论
         comment_obj = models.Comment.objects.create(article_id=article_id, user_id=user_pk, content=content,
                                                     parent_comment_id=pid)
-    # 该文章的评论数量+1，这个逻辑后面补一下
+    models.Article.objects.filter(article_id=article_id).update(comment_count=F("comment_count")+1)
     response["create_time"] = comment_obj.create_time.strftime("%Y-%m-%d %H:%M")
     response["content"] = comment_obj.content
     response["username"] = comment_obj.user.username
@@ -139,10 +139,20 @@ def up_down(request):
     is_up = json.loads(request.POST.get("is_up"))
     user = request.user
     response = {"status": True}
-    try:
-        models.ArticleUpDown.objects.create(user=user, article_id=article_id, is_up=is_up)
-        models.Article.objects.filter(article_id=article_id).update(up_count=F("up_count")+1)
-    except Exception as e:
-        response["status"] = False
-        response["first_action"] = models.ArticleUpDown.objects.filter(user=user, article_id=article_id).first().is_up
+    if is_up:
+        try:
+            models.ArticleUpDown.objects.create(user=user, article_id=article_id, is_up=is_up)
+            models.Article.objects.filter(article_id=article_id).update(up_count=F("up_count")+1)
+        except Exception as e:
+            response["status"] = False
+            response["first_action"] = models.ArticleUpDown.objects.filter(user=user, article_id=article_id).first()\
+                .is_up
+    else:
+        try:
+            models.ArticleUpDown.objects.create(user=user, article_id=article_id, is_up=is_up)
+            models.Article.objects.filter(article_id=article_id).update(down_count=F("down_count")+1)
+        except Exception as e:
+            response["status"] = False
+            response["first_action"] = models.ArticleUpDown.objects.filter(user=user, article_id=article_id).first()\
+                .is_up
     return JsonResponse(response)

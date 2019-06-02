@@ -121,20 +121,14 @@
                     <!-- 点赞区域 -->
                     <div class="clearfix pull-right" id="div_digg">
                         <p>
-                            <button class="btn btn-default btn-sm">
+                            <button class="btn btn-default btn-sm diggit action">
                                 <span><i class="fa fa-thumbs-o-up"></i></span>
-                                <span class="diggit action" id="digg_count">{{ article.up_count }}</span>
+                                <span id="digg_count">{{ article.up_count }}</span>
                             </button>
-                            <button class="btn btn-default btn-sm">
+                            <button class="btn btn-default btn-sm action">
                                 <span><i class="fa fa-thumbs-o-down"></i></span>
-                                <span class="action" id="bury_count">{{ article.up_count }}</span>
+                                <span id="bury_count">{{ article.down_count }}</span>
                             </button>
-{#                            <button class="btn btn-default btn-sm diggit action" id="digg_count">#}
-{#                                <i class="fa fa-thumbs-o-up"></i>&nbsp;{{ article.up_count }}#}
-{#                            </button>#}
-{#                            <button class="btn btn-default btn-sm action" id="bury_count">#}
-{#                                <i class="fa fa-thumbs-o-down"></i>&nbsp;{{ article.down_count }}#}
-{#                            </button>#}
                             <div class="diggword pull-right" id="digg_tips" style="color: red;font-size: 13px"></div>
                         </p>
                     </div>
@@ -191,7 +185,7 @@
                             </p>
                         </div>
                     {% else %}
-                        <a href="/login/">登录</a>
+                        <a href="/login/">请登录后再评论</a>
                     {% endif %}
                 </div>
             </div>
