@@ -103,7 +103,9 @@
 <!-- 页面主体内容 -->
 <div class="container-fluid">
     <div class="row">
-    <div class="info" style="display: none" article_id="{{ article.pk }}" username="{{ request.user.username }}"></div>
+        <div class="info" style="display: none" article_id="{{ article.pk }}"
+             username="{{ request.user.username }}"></div>
+        <!-- 文章内容展示区 -->
         <div class="col-md-9 column">
             <div class="panel panel-default" style="margin-top: 10px">
                 <div class="panel-heading">文章内容</div>
@@ -113,9 +115,32 @@
                     <h1 class="panel-title">{{ article.title }}</h1>
                 </div>
                 <div class="panel-body">
-                    {{ article.articledetail.content|safe }}
+                    <div>
+                        {{ article.articledetail.content|safe }}
+                    </div>
+                    <!-- 点赞区域 -->
+                    <div class="clearfix pull-right" id="div_digg">
+                        <p>
+                            <button class="btn btn-default btn-sm">
+                                <span><i class="fa fa-thumbs-o-up"></i></span>
+                                <span class="diggit action" id="digg_count">{{ article.up_count }}</span>
+                            </button>
+                            <button class="btn btn-default btn-sm">
+                                <span><i class="fa fa-thumbs-o-down"></i></span>
+                                <span class="action" id="bury_count">{{ article.up_count }}</span>
+                            </button>
+{#                            <button class="btn btn-default btn-sm diggit action" id="digg_count">#}
+{#                                <i class="fa fa-thumbs-o-up"></i>&nbsp;{{ article.up_count }}#}
+{#                            </button>#}
+{#                            <button class="btn btn-default btn-sm action" id="bury_count">#}
+{#                                <i class="fa fa-thumbs-o-down"></i>&nbsp;{{ article.down_count }}#}
+{#                            </button>#}
+                            <div class="diggword pull-right" id="digg_tips" style="color: red;font-size: 13px"></div>
+                        </p>
+                    </div>
                 </div>
             </div>
+            <!-- 文章评论区 -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1 class="panel-title">评论列表</h1>
@@ -128,18 +153,19 @@
                                     <span style="color: gray">第{{ forloop.counter }}楼</span> &nbsp;
                                     <span style="color: gray">{{ comment.create_time|date:"Y-m-d h:i" }}</span> &nbsp;
                                     <a href="#"><span>{{ comment.user.username }}</span></a>
-                                    <a class="pull-right reply_btn" username="{{ comment.user.username }}" comment_pk="{{ comment.pk }}">
-                                        <span>回复</span>
-                                    </a>
+                                    <button class="pull-right reply_btn btn btn-default btn-xs" style="font-size: 10px"
+                                            username="{{ comment.user.username }}" comment_pk="{{ comment.pk }}">回复
+                                    </button>
                                 </div>
                                 {% if comment.parent_comment_id %}
                                     <div class="pid_info well">
-                                        <p>{{ comment.parent_comment.user.username }} &nbsp;{{ comment.parent_comment.content }} &nbsp;</p>
+                                        <p>@{{ comment.parent_comment.user.username }}
+                                            &nbsp;{{ comment.parent_comment.content }} &nbsp;</p>
                                     </div>
                                 {% endif %}
-                            <div class="con">
-                                <p>{{ comment.content }}</p>
-                            </div>
+                                <div class="con">
+                                    <p>{{ comment.content }}</p>
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -153,12 +179,15 @@
                 <div class="panel-body">
                     {% if request.user.username %}
                         <div class="div_comment">
-                            <p>昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled"
-                                         size="50" value="{{ request.user.username }}"></p>
-                            <p>评论内容</p>
-                            <textarea name="com_content" id="comment_content" cols="80" rows="10"></textarea>
+                            <p>昵称：
+                                <input type="text" id="tbCommentAuthor" class="author form-control" disabled="disabled"
+                                       style="width: 300px" value="{{ request.user.username }}">
+                            </p>
+                            <p>评论内容：</p>
+                            <textarea name="com_content" id="comment_content" class="form-control" rows="8"></textarea>
                             <p>
-                                <button id="comment_btn">提交评论</button>
+                                <button id="comment_btn" class="btn btn-default btn-sm" style="margin-top: 10px">提交评论
+                                </button>
                             </p>
                         </div>
                     {% else %}

@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^(\w+)/article/(\d+)/$', views.article_detail),
     # blog下所有的api
     url(r"^api/comment/$", views.comment),
-
+    url(r"^api/up_down/$", views.up_down),
 ]

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from blog import models, reg_form
-from django.db.models import Count
+from django.db.models import Count, F
 from django.contrib import auth
+import json
 
 
 def index(request):
@@ -130,4 +131,18 @@ def comment(request):
     response["create_time"] = comment_obj.create_time.strftime("%Y-%m-%d %H:%M")
     response["content"] = comment_obj.content
     response["username"] = comment_obj.user.username
+    return JsonResponse(response)
+
+
+def up_down(request):
+    article_id = request.POST.get("article_id")
+    is_up = json.loads(request.POST.get("is_up"))
+    user = request.user
+    response = {"status": True}
+    try:
+        models.ArticleUpDown.objects.create(user=user, article_id=article_id, is_up=is_up)
+        models.Article.objects.filter(article_id=article_id).update(up_count=F("up_count")+1)
+    except Exception as e:
+        response["status"] = False
+        response["first_action"] = models.ArticleUpDown.objects.filter(user=user, article_id=article_id).first().is_up
     return JsonResponse(response)

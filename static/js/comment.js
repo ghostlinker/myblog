@@ -34,3 +34,49 @@ $(".list-group-item .reply_btn").click(function () {
     //给pid赋值
     pid = $(this).attr("comment_pk");
 });
+
+//点赞或者踩的事件
+$("#div_digg .action").click(function () {
+    if ($(".info").attr("username")) {
+        //点赞或者踩
+        var is_up = $(this).hasClass("diggit");
+        var article_id = $(".info").attr("article_id");
+        //发ajax请求
+        $.ajax({
+            url: "/blog/api/up_down/",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                is_up: is_up,
+                article_id: article_id,
+            },
+            success: function (data) {
+                if (data.status) {
+                    //赞或者灭成功
+                    if (is_up){
+                        var val = $("#digg_count").text();
+                        val = parseInt(val) + 1;
+                        $("#digg_count").text(val);
+                    } else {
+                        var val = $("#bury_count").text();
+                        val = parseInt(val) + 1;
+                        $("#bury_count").text(val);
+                    }
+                } else {
+                    //重复提交
+                    if (data.first_action) {
+                        $("#digg_tips").html("你已经赞过");
+                    } else {
+                        $("#digg_tips").html("你已经踩过");
+                    }
+                    setTimeout(function () {
+                        $("#digg_tips").html("")
+                    }, 1000)
+                }
+            }
+        })
+    } else {
+        alert("请登录后再点赞")
+        location.href = "/login/"
+    }
+});
