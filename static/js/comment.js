@@ -72,3 +72,9 @@ $("#div_digg .action").click(function () {
         location.href = "/login/";
     }
 });
+
+$(document).ready(function () {
+    $('code.hljs').each(function (i, block) {
+        hljs.lineNumbersBlock(block);
+    });
+});

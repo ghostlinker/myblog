@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+# from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 # 扩展auth表
@@ -106,7 +108,7 @@ class ArticleDetail(models.Model):
     文章详情表
     """
     detail_id = models.AutoField(primary_key=True, verbose_name="文章详情id")
-    content = models.TextField(verbose_name="文章详情内容")
+    content = RichTextUploadingField(verbose_name="文章详情内容", config_name='default')
     article = models.OneToOneField(to="Article", to_field="article_id")  # 文章和文章详情一对一
 
     def __str__(self):

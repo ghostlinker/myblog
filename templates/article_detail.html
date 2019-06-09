@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/fontawesome/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static '/css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'highlight/styles/darcula.css' %}">
 </head>
 <body>
 <!-- 导航条 -->
@@ -30,10 +31,10 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">学习目录</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">python入门</a></li>
-                        <li><a href="#">selenium</a></li>
+                        <li><a href="#">Python入门</a></li>
+                        <li><a href="#">Selenium</a></li>
                         <li><a href="#">Django</a></li>
-                        <li><a href="#">python标准库</a></li>
+                        <li><a href="#">Python标准库</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -86,8 +87,6 @@
                            aria-expanded="false">个人中心</a>
                         <ul class="dropdown-menu">
                             <li><a href="/blog/{{ request.user.username }}/">我的博客</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/logout/">注销</a></li>
                         </ul>
@@ -235,5 +234,9 @@
 <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static '/js/login.js' %}"></script>
 <script src="{% static '/js/comment.js' %}"></script>
+<!-- 代码高亮设置 -->
+<script src="{% static 'highlight/highlight.pack.js' %}"></script>
+<script src="{% static 'highlight/highlightjs-line-numbers.js' %}"></script>
+<script>hljs.initHighlightingOnLoad();hljs.initLineNumbersOnLoad();</script>
 </body>
 </html>

@@ -2,6 +2,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from blog import views
 from blog import urls
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -14,4 +16,7 @@ urlpatterns = [
     url(r'^api/check_user/$', views.check_user),
     # blog下的url给blog下的url.py处理
     url(r'^blog/', include(urls)),
+    url('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
