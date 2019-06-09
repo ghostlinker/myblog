@@ -21,7 +21,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">测试博客</a>
+            <a class="navbar-brand" href="#">Ghost的博客</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -107,11 +107,24 @@
         <!-- 文章内容展示区 -->
         <div class="col-md-9 column">
             <div class="panel panel-default" style="margin-top: 10px">
-                <div class="panel-heading">文章内容</div>
-            </div>
-            <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1 class="panel-title">{{ article.title }}</h1>
+                    <div>
+                        <h1 class="panel-title">
+                            <strong>{{ article.title }}</strong>
+                            {% for tag in article.tags.all %}
+                                <span class="label label-danger" style="font-size:10px; margin-left: 5px">
+                                    {{ tag.title }}
+                                </span>
+                            {% endfor %}
+                        </h1>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 12px">
+                        发布于
+                        <span>{{ article.create_time|date:'Y-m-d H:i:s' }}&nbsp;</span>
+                        <span><i class="fa fa-share fa-fw" aria-hidden="true"></i>点击:{{ article.hit_count }}</span>
+                        <span><i class="fa fa-comment-o fa-fw"
+                                 aria-hidden="true"></i>评论:{{ article.comment_count }}</span>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div>
@@ -128,7 +141,7 @@
                                 <span><i class="fa fa-thumbs-o-down"></i></span>
                                 <span id="bury_count">{{ article.down_count }}</span>
                             </button>
-                            <div class="diggword pull-right" id="digg_tips" style="color: red;font-size: 13px"></div>
+                        <div class="diggword pull-right" id="digg_tips" style="color: red;font-size: 13px"></div>
                         </p>
                     </div>
                 </div>
@@ -151,7 +164,7 @@
                                     </button>
                                 </div>
                                 {% if comment.parent_comment_id %}
-                                    <div class="pid_info well">
+                                    <div class="pid_info well" style="margin-top: 10px">
                                         <p>@{{ comment.parent_comment.user.username }}
                                             &nbsp;{{ comment.parent_comment.content }} &nbsp;</p>
                                     </div>
@@ -160,6 +173,8 @@
                                     <p>{{ comment.content }}</p>
                                 </div>
                             </li>
+                        {% empty %}
+                            <p>暂无评论</p>
                         {% endfor %}
                     </ul>
                 </div>
@@ -167,7 +182,7 @@
             {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1 class="panel-title">评论区域</h1>
+                    <h1 class="panel-title">评论区</h1>
                 </div>
                 <div class="panel-body">
                     {% if request.user.username %}
@@ -237,6 +252,7 @@
 <!-- 代码高亮设置 -->
 <script src="{% static 'highlight/highlight.pack.js' %}"></script>
 <script src="{% static 'highlight/highlightjs-line-numbers.js' %}"></script>
-<script>hljs.initHighlightingOnLoad();hljs.initLineNumbersOnLoad();</script>
+<script>hljs.initHighlightingOnLoad();
+hljs.initLineNumbersOnLoad();</script>
 </body>
 </html>

@@ -55,3 +55,7 @@ td.hljs-ln-numbers {
 td.hljs-ln-code {
     padding-left: 10px;
 }
+
+a:link {
+    text-decoration: none;
+}

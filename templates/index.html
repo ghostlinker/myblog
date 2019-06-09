@@ -20,12 +20,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">测试博客</a>
+            <a class="navbar-brand" href="#">Ghost的博客</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">首页</a></li>
+                <li><a href="/index/">首页</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">学习目录</a>
@@ -108,7 +108,14 @@
             {% for article in article_list %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5><a href="/blog/{{ article.user.username }}/article/{{ article.pk }}/">{{ article.title }}</a></h5>
+                        <h5>
+                            <a href="/blog/{{ article.user.username }}/article/{{ article.pk }}/">{{ article.title }}</a>
+                            {% for tag in article.tags.all %}
+                                <span class="label label-danger" style="font-size:10px; margin-left: 5px" >
+                                    {{ tag.title }}
+                                </span>
+                            {% endfor %}
+                        </h5>
                     </div>
                     <div class="panel-body">
                         <p>{{ article.desc }}</p>
