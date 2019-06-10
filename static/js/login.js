@@ -84,10 +84,29 @@ $("#login-button").click(function () {
             }
         }
     })
-})
+});
 
 //重新获取焦点时清空之前的错误信息
 $("#username, #password").focus(function () {
     $(".login-error").text("");
 });
 
+//文章点击数
+$(".article_hit").click(function () {
+    var article_id = $(".article_hit").attr("article_id");
+    $.ajax({
+        url: "/blog/api/hit/",
+        type: "post",
+        data:{
+            "article_id": article_id,
+            "csrfmiddlewaretoken":  $("[name='csrfmiddlewaretoken']").val()
+        },
+        success: function (data) {
+            if (data.status){
+                var val = $("#hit_count").text();
+                val = parseInt(val) + 1;
+                $("#hit_count").text(val);
+            }
+        }
+    })
+});

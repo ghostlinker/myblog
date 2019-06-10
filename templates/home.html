@@ -22,26 +22,27 @@
             </button>
             <a class="navbar-brand" href="#">Ghost的博客</a>
         </div>
-
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/index/">首页</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">学习目录</a>
+                       aria-expanded="false">软件测试</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Python入门</a></li>
-                        <li><a href="#">Selenium</a></li>
-                        <li><a href="#">Django</a></li>
-                        <li><a href="#">Python标准库</a></li>
+                        <li><a href="#">功能测试</a></li>
+                        <li><a href="#">性能测试</a></li>
+                        <li><a href="#">安全测试</a></li>
+                        <li><a href="#">自动化测试</a></li>
+                        <li><a href="#">测试管理</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Python</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">内置函数</a></li>
-                        <li><a href="#">内置模块</a></li>
+                        <li><a href="#">Python基础</a></li>
+                        <li><a href="#">Python标准库</a></li>
+                        <li><a href="#">Python第三方库</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -77,6 +78,16 @@
                         <li><a href="#">Pycharm</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">其他</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">数据库</a></li>
+                        <li><a href="#">操作系统</a></li>
+                        <li><a href="#">版本控制</a></li>
+                        <li><a href="#">持续集成</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">{{ request.user.username }}</a></li>
@@ -90,7 +101,6 @@
         </div>
     </div>
 </nav>
-
 <!-- 页面主体内容 -->
 <div class="container-fluid">
     <div class="row clearfix">
@@ -102,7 +112,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5>
-                            <a href="/blog/{{ article.user.username }}/article/{{ article.pk }}/">{{ article.title }}</a>
+                            <a class="article_hit" article_id="{{ article.pk }}" href="/blog/{{ article.user.username }}/article/{{ article.pk }}/">{{ article.title }}</a>
                             {% for tag in article.tags.all %}
                                 <span class="label label-danger" style="font-size:10px; margin-left: 5px">
                                     {{ tag.title }}
@@ -116,7 +126,10 @@
                     <div class="panel-footer">
                         <span><a href="#">{{ article.user.username }}&nbsp;</a></span>发布于
                         <span>{{ article.create_time|date:'Y-m-d H:i:s' }}&nbsp;</span>
-                        <span><i class="fa fa-share fa-fw" aria-hidden="true"></i>点击:{{ article.hit_count }}</span>
+                        <span>
+                            <i class="fa fa-share fa-fw" aria-hidden="true"></i>
+                            点击(<span id="hit_count">{{ article.hit_count }}</span>)
+                        </span>
                         <span><i class="fa fa-comment-o fa-fw"
                                  aria-hidden="true"></i>评论:{{ article.comment_count }}</span>
                         <span><i class="fa fa-thumbs-o-up fa-fw" aria-hidden="true"></i>点赞:{{ article.up_count }}</span>
@@ -158,7 +171,6 @@
         </div>
     </div>
 </div>
-
 <!-- 页脚 -->
 <footer class=navbar-fixed-bottom>
     <div class="copyright">

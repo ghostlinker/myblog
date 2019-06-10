@@ -1,2 +1,3 @@
 #忽略pycharm的.ide文件
 .idea/
+.media/upload/

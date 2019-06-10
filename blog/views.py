@@ -156,3 +156,10 @@ def up_down(request):
             response["first_action"] = models.ArticleUpDown.objects.filter(user=user, article_id=article_id).first()\
                 .is_up
     return JsonResponse(response)
+
+
+def hit(request):
+    article_id = request.POST.get("article_id")
+    models.Article.objects.filter(article_id=article_id).update(hit_count=F("hit_count")+1)
+    response = {"status": True}
+    return JsonResponse(response)
